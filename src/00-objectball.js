@@ -118,7 +118,6 @@ function gameObject() {
 
 console.log(gameObject());
 
-
 // Test 2 : building functions
 
 // Accesses players in both teams
@@ -213,3 +212,86 @@ function bigShoeRebounds() {
 }
 
 console.log(bigShoeRebounds());
+
+// Bonus Questions:
+
+// Which player has the most points:
+function mostPointsScored() {
+  const game = gameObject();
+  let maxPoints = 0;
+  let topPlayer = "";
+
+  for (let team of [game.home, game.away]) {
+    for (let player in team.players) {
+      if (team.players[player].points > maxPoints) {
+        maxPoints = team.players[player].points;
+        topPlayer = player;
+      }
+    }
+  }
+
+  return topPlayer;
+}
+
+console.log(mostPointsScored());
+
+// Which team has the most points
+function winningTeam() {
+  const game = gameObject();
+  let homePoints = 0;
+  let awayPoints = 0;
+
+  for (let player in game.home.players) {
+    homePoints += game.home.players[player].points;
+  }
+
+  for (let player in game.away.players) {
+    awayPoints += game.away.players[player].points;
+  }
+
+  return homePoints > awayPoints ? game.home.teamName : game.away.teamName;
+}
+
+console.log(winningTeam());
+
+// Which player has the longest name
+function playerWithLongestName() {
+  const game = gameObject();
+  let longestName = "";
+
+  for (let team of [game.home, game.away]) {
+    for (let player in team.players) {
+      if (player.length > longestName.length) {
+        longestName = player;
+      }
+    }
+  }
+
+  return longestName;
+}
+
+console.log(playerWithLongestName());
+
+// Super Bonus Question
+
+// Does the player with the longest name have the most steals
+function doesLongNameSteal() {
+  const game = gameObject();
+  const longestName = playerWithLongestName();
+  let mostSteals = 0;
+
+  for (let team of [game.home, game.away]) {
+    for (let player in team.players) {
+      if (team.players[player].steals > mostSteals) {
+        mostSteals = team.players[player].steals;
+      }
+    }
+  }
+
+  return (
+    game.home.players[longestName]?.steals === mostSteals ||
+    game.away.players[longestName]?.steals === mostSteals
+  );
+}
+
+console.log(doesLongNameSteal());
